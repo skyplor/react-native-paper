@@ -5,7 +5,13 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-import { TextInput, HelperText, withTheme, Theme } from 'react-native-paper';
+import {
+  Button,
+  TextInput,
+  HelperText,
+  withTheme,
+  Theme,
+} from 'react-native-paper';
 
 const MAX_LENGTH = 20;
 
@@ -29,6 +35,7 @@ type State = {
   outlinedMultiline: string;
   outlinedTextArea: string;
   maxLengthName: string;
+  defaultValue: string;
 };
 
 class TextInputExample extends React.Component<Props, State> {
@@ -50,6 +57,7 @@ class TextInputExample extends React.Component<Props, State> {
     outlinedMultiline: '',
     outlinedTextArea: '',
     maxLengthName: '',
+    defaultValue: '',
   };
 
   _isUsernameValid = (name: string) => /^[a-zA-Z]*$/.test(name);
@@ -241,6 +249,21 @@ class TextInputExample extends React.Component<Props, State> {
             >
               Error: Only letters are allowed
             </HelperText>
+          </View>
+          <View style={styles.inputContainerStyle}>
+            <TextInput
+              label="Input with default value"
+              defaultValue={this.state.defaultValue}
+            />
+            <Button
+              onPress={() =>
+                this.setState({
+                  defaultValue: 'Default value',
+                })
+              }
+            >
+              Set default value
+            </Button>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
