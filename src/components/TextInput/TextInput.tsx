@@ -182,7 +182,7 @@ class TextInput extends React.Component<TextInputProps, State> {
       value:
         typeof nextProps.value !== 'undefined'
           ? nextProps.value
-          : prevState.value,
+          : prevState.value || nextProps.defaultValue,
     };
   }
 
