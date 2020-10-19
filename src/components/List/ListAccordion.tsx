@@ -6,12 +6,12 @@ import {
   StyleSheet,
   StyleProp,
   TextStyle,
+  I18nManager,
 } from 'react-native';
-import TouchableRipple from '../TouchableRipple';
-import Icon from '../Icon';
+import TouchableRipple from '../TouchableRipple/TouchableRipple';
+import MaterialCommunityIcon from '../MaterialCommunityIcon';
 import Text from '../Typography/Text';
 import { withTheme } from '../../core/theming';
-import { Theme } from '../../types';
 
 import {
   ListAccordionGroupContext,
@@ -48,7 +48,7 @@ type Props = {
   /**
    * @optional
    */
-  theme: Theme;
+  theme: ReactNativePaper.Theme;
   /**
    * Style that is passed to the wrapping TouchableRipple element.
    */
@@ -75,6 +75,10 @@ type Props = {
    * Id is used for distinguishing specific accordion when using List.AccordionGroup. Property is required when using List.AccordionGroup and has no impact on behavior when using standalone List.Accordion.
    */
   id?: string | number;
+  /**
+   * TestID used for testing purposes
+   */
+  testID?: string;
 };
 
 type State = {
@@ -93,42 +97,33 @@ type State = {
  * ## Usage
  * ```js
  * import * as React from 'react';
- * import { List, Checkbox } from 'react-native-paper';
+ * import { List } from 'react-native-paper';
  *
- * class MyComponent extends React.Component {
- *   state = {
- *     expanded: true
- *   }
+ * const MyComponent = () => {
+ *   const [expanded, setExpanded] = React.useState(true);
  *
- *   _handlePress = () =>
- *     this.setState({
- *       expanded: !this.state.expanded
- *     });
+ *   const handlePress = () => setExpanded(!expanded);
  *
- *   render() {
- *     return (
- *       <List.Section title="Accordions">
- *         <List.Accordion
- *           title="Uncontrolled Accordion"
- *           left={props => <List.Icon {...props} icon="folder" />}
- *         >
- *           <List.Item title="First item" />
- *           <List.Item title="Second item" />
- *         </List.Accordion>
+ *   return (
+ *     <List.Section title="Accordions">
+ *       <List.Accordion
+ *         title="Uncontrolled Accordion"
+ *         left={props => <List.Icon {...props} icon="folder" />}>
+ *         <List.Item title="First item" />
+ *         <List.Item title="Second item" />
+ *       </List.Accordion>
  *
- *         <List.Accordion
- *           title="Controlled Accordion"
- *           left={props => <List.Icon {...props} icon="folder" />}
- *           expanded={this.state.expanded}
- *           onPress={this._handlePress}
- *         >
- *           <List.Item title="First item" />
- *           <List.Item title="Second item" />
- *         </List.Accordion>
- *       </List.Section>
- *     );
- *   }
- * }
+ *       <List.Accordion
+ *         title="Controlled Accordion"
+ *         left={props => <List.Icon {...props} icon="folder" />}
+ *         expanded={expanded}
+ *         onPress={handlePress}>
+ *         <List.Item title="First item" />
+ *         <List.Item title="Second item" />
+ *       </List.Accordion>
+ *     </List.Section>
+ *   );
+ * };
  *
  * export default MyComponent;
  * ```
@@ -145,13 +140,13 @@ class ListAccordion extends React.Component<Props, State> {
     expanded: this.props.expanded || false,
   };
 
-  _handlePress = () => {
+  private handlePress = () => {
     this.props.onPress && this.props.onPress();
 
     if (this.props.expanded === undefined) {
       // Only update state of the `expanded` prop was not passed
       // If it was passed, the component will act as a controlled component
-      this.setState(state => ({
+      this.setState((state) => ({
         expanded: !state.expanded,
       }));
     }
@@ -170,11 +165,9 @@ class ListAccordion extends React.Component<Props, State> {
       descriptionNumberOfLines,
       style,
       id,
+      testID,
     } = this.props;
-    const titleColor = color(theme.colors.text)
-      .alpha(0.87)
-      .rgb()
-      .string();
+    const titleColor = color(theme.colors.text).alpha(0.87).rgb().string();
     const descriptionColor = color(theme.colors.text)
       .alpha(0.54)
       .rgb()
@@ -199,7 +192,7 @@ class ListAccordion extends React.Component<Props, State> {
           const handlePress =
             groupContext && id !== undefined
               ? () => groupContext.onAccordionPress(id)
-              : this._handlePress;
+              : this.handlePress;
           return (
             <View>
               <TouchableRipple
@@ -208,6 +201,7 @@ class ListAccordion extends React.Component<Props, State> {
                 accessibilityTraits="button"
                 accessibilityComponentType="button"
                 accessibilityRole="button"
+                testID={testID}
               >
                 <View style={styles.row} pointerEvents="none">
                   {left
@@ -251,16 +245,17 @@ class ListAccordion extends React.Component<Props, State> {
                       description ? styles.multiline : undefined,
                     ]}
                   >
-                    <Icon
-                      source={expanded ? 'chevron-up' : 'chevron-down'}
+                    <MaterialCommunityIcon
+                      name={expanded ? 'chevron-up' : 'chevron-down'}
                       color={titleColor}
                       size={24}
+                      direction={I18nManager.isRTL ? 'rtl' : 'ltr'}
                     />
                   </View>
                 </View>
               </TouchableRipple>
               {expanded
-                ? React.Children.map(children, child => {
+                ? React.Children.map(children, (child) => {
                     if (
                       left &&
                       React.isValidElement(child) &&

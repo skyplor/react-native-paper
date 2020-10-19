@@ -19,9 +19,14 @@ exports[`renders menu with content styles 1`] = `
   >
     <View
       accessibilityRole="button"
-      accessibilityStates={Array []}
+      accessibilityState={
+        Object {
+          "disabled": undefined,
+        }
+      }
       accessible={true}
-      isTVSelectable={true}
+      focusable={false}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -113,9 +118,14 @@ exports[`renders not visible menu 1`] = `
   >
     <View
       accessibilityRole="button"
-      accessibilityStates={Array []}
+      accessibilityState={
+        Object {
+          "disabled": undefined,
+        }
+      }
       accessible={true}
-      isTVSelectable={true}
+      focusable={false}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -207,9 +217,14 @@ exports[`renders visible menu 1`] = `
   >
     <View
       accessibilityRole="button"
-      accessibilityStates={Array []}
+      accessibilityState={
+        Object {
+          "disabled": undefined,
+        }
+      }
       accessible={true}
-      isTVSelectable={true}
+      focusable={false}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}

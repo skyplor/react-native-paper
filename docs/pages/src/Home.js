@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { styled } from 'linaria/react';
-import { Link } from 'component-docs/components';
+import { Link, Header } from 'component-docs/components';
 import ThemeIcon from '../../components/theme-icon';
 import Content from './components/Content';
 
@@ -17,10 +17,7 @@ export default class Home extends React.Component<{}> {
     const { isDark } = this.state;
     return (
       <Container>
-        <Banner>
-          Looking for the documentation for version 1.0? You can find it{' '}
-          <a href="1.0">here</a>.
-        </Banner>
+        <Header logo="images/sidebar-logo.svg" />
         <Content>
           <h1>
             Cross-platform{' '}
@@ -35,7 +32,7 @@ export default class Home extends React.Component<{}> {
             guidelines.
           </p>
           <a
-            href="https://snack.expo.io/@satya164/github.com-callstack-react-native-paper:example"
+            href="https://snack.expo.io/@react-native-paper/github.com-callstack-react-native-paper:example"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -96,19 +93,6 @@ export default class Home extends React.Component<{}> {
 const PRIMARY_COLOR = '#6200ee';
 const RESTING_SHADOW = '0 1px 3px rgba(0, 0, 0, 0.12)';
 
-const Banner = styled.p`
-  margin: 0;
-  padding: 12px;
-  margin: 24px;
-  border-radius: 3px;
-  text-align: center;
-  background-color: #f8f9fa;
-
-  @media (max-width: 640px) {
-    margin-top: 72px;
-  }
-`;
-
 const Highlighted = styled.a`
   color: ${PRIMARY_COLOR};
 
@@ -120,7 +104,7 @@ const Highlighted = styled.a`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 `;

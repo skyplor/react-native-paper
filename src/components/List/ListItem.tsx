@@ -8,10 +8,10 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import TouchableRipple from '../TouchableRipple';
+import TouchableRipple from '../TouchableRipple/TouchableRipple';
 import Text from '../Typography/Text';
 import { withTheme } from '../../core/theming';
-import { Theme, $RemoveChildren, EllipsizeProp } from '../../types';
+import type { $RemoveChildren, EllipsizeProp } from '../../types';
 
 type Description =
   | React.ReactNode
@@ -58,7 +58,7 @@ type Props = $RemoveChildren<typeof TouchableRipple> & {
   /**
    * @optional
    */
-  theme: Theme;
+  theme: ReactNativePaper.Theme;
   /**
    * Style that is passed to the wrapping TouchableRipple element.
    */
@@ -82,11 +82,15 @@ type Props = $RemoveChildren<typeof TouchableRipple> & {
    */
   descriptionNumberOfLines?: number;
   /**
-   * Ellipsize Mode for the Title
+   * Ellipsize Mode for the Title.  One of `'head'`, `'middle'`, `'tail'`, `'clip'`.
+   *
+   * See [`ellipsizeMode`](https://reactnative.dev/docs/text#ellipsizemode)
    */
   titleEllipsizeMode?: EllipsizeProp;
   /**
-   * Ellipsize Mode for the Description
+   * Ellipsize Mode for the Description.  One of `'head'`, `'middle'`, `'tail'`, `'clip'`.
+   *
+   * See [`ellipsizeMode`](https://reactnative.dev/docs/text#ellipsizemode)
    */
   descriptionEllipsizeMode?: EllipsizeProp;
 };
@@ -169,10 +173,7 @@ class ListItem extends React.Component<Props> {
       titleEllipsizeMode,
       ...rest
     } = this.props;
-    const titleColor = color(theme.colors.text)
-      .alpha(0.87)
-      .rgb()
-      .string();
+    const titleColor = color(theme.colors.text).alpha(0.87).rgb().string();
     const descriptionColor = color(theme.colors.text)
       .alpha(0.54)
       .rgb()
@@ -196,7 +197,7 @@ class ListItem extends React.Component<Props> {
                     },
               })
             : null}
-          <View style={[styles.item, styles.content]} pointerEvents="none">
+          <View style={[styles.item, styles.content]}>
             <Text
               ellipsizeMode={titleEllipsizeMode}
               numberOfLines={titleNumberOfLines}
